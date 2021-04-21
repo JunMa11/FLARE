@@ -37,12 +37,12 @@ if __name__ == '__main__':
     print('We are evaluating', args.docker_name)
     json_dir = './data_all/{}'.format(args.docker_name)
     json_path = os.path.join(json_dir,glob.glob(args.docker_input_file+'/*')[0].split('/')[-1].split('.')[0]+'.json')
-    print(json_path)
+    #print(json_path)
     p1 = Process(target=daemon_process, args=(args.time_interval, json_path, args.gpus,))
     p1.daemon = True
     p1.start()
     t0 = time.time()
-    cmd = 'docker container run --gpus=1  --name {} --rm -v $PWD/inputs/:/workspace/inputs/ -v $PWD/outputs/:/workspace/outputs/ {}:latest /bin/bash -c "sh {}"'.format(
+    cmd = 'docker container run  --gpus="device=1"  --name {} --rm -v $PWD/inputs/:/workspace/inputs/ -v $PWD/outputs/:/workspace/outputs/ {}:latest /bin/bash -c "sh {}"'.format(
     args.docker_name, args.docker_name, args.shell_path)
     print(cmd) 
     os.system(cmd)
