@@ -28,7 +28,7 @@ def daemon_process(time_interval, json_path, gpu_index=0):
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
-    parser.add_argument("-time_interval", default=0.5, help="time_interval")
+    parser.add_argument("-time_interval", default=0.1, help="time_interval")
     parser.add_argument("-shell_path", default='predict.sh', help="time_interval")
     parser.add_argument("-gpus", default=0, help="CUDA_VISIBLE_DEVICES")
     parser.add_argument("-docker_input_file", default='./inputs/', help="docker input folder") 
