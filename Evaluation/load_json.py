@@ -21,7 +21,7 @@ if __name__ == '__main__':
             js = json.load(f)
             csv_l.append(js['time'])
             mem = js['gpu_memory']
-            x = [item * 0.5 for item in range(len(mem))]
+            x = [item * 0.1 for item in range(len(mem))]
             plt.cla()
             plt.xlabel("Time (s)", Fontname='Times New Roman', fontsize='large')
             plt.ylabel("GPU Memory (MB)", Fontname='Times New Roman', fontsize='large')
