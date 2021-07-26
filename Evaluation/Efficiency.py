@@ -28,7 +28,7 @@ def daemon_process(time_interval, json_path, gpu_index=0):
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
-    parser.add_argument("-time_interval", default=0.5, help="time_interval")
+    parser.add_argument("-time_interval", default=0.1, help="time_interval")
     parser.add_argument("-shell_path", default='predict.sh', help="time_interval")
     parser.add_argument("-gpus", default=0, help="CUDA_VISIBLE_DEVICES")
     parser.add_argument("-docker_input_file", default='./inputs/', help="docker input folder") 
@@ -37,7 +37,6 @@ if __name__ == '__main__':
     print('We are evaluating', args.docker_name)
     json_dir = './data_all/{}'.format(args.docker_name)
     json_path = os.path.join(json_dir,glob.glob(args.docker_input_file+'/*')[0].split('/')[-1].split('.')[0]+'.json')
-    #print(json_path)
     p1 = Process(target=daemon_process, args=(args.time_interval, json_path, args.gpus,))
     p1.daemon = True
     p1.start()
@@ -46,7 +45,6 @@ if __name__ == '__main__':
     args.docker_name, args.docker_name, args.shell_path)
     print(cmd) 
     os.system(cmd)
-
     infer_time = time.time() - t0
     with open(json_path, 'r')as f:
         js = json.load(f)

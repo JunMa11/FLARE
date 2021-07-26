@@ -8,7 +8,7 @@ for item in tarlist:
     #print(name )
     os.system('docker image load < {}'.format(item))
     os.mkdir('./data_all/{}'.format(name))
-    for image_i in  glob.glob('imagesTs/*'):
+    for image_i in  sorted(glob.glob('imagesTs/*')):
         shutil.copy(image_i,image_i.replace('imagesTs','inputs'))
         os .system('python Efficiency.py -docker_name {}'.format(name))
         print(image_i.split('/')[-1],'finished!')

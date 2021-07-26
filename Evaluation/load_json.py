@@ -10,7 +10,7 @@ if __name__ == '__main__':
     print('we are counting', args.docker_name)
     json_dir = './data_all/{}'.format(args.docker_name)
     csv_path = './data_all/{}/infer_Efficiency.csv'.format(args.docker_name)
-    jsonl = glob.glob(json_dir + '/*.json')
+    jsonl = sorted(glob.glob(json_dir + '/*.json'))
     alldata = []
     for item in jsonl:
         csv_l = []
@@ -21,7 +21,7 @@ if __name__ == '__main__':
             js = json.load(f)
             csv_l.append(js['time'])
             mem = js['gpu_memory']
-            x = [item * 0.5 for item in range(len(mem))]
+            x = [item * 0.1 for item in range(len(mem))]
             plt.cla()
             plt.xlabel("Time (s)", Fontname='Times New Roman', fontsize='large')
             plt.ylabel("GPU Memory (MB)", Fontname='Times New Roman', fontsize='large')
@@ -35,11 +35,12 @@ if __name__ == '__main__':
                     count_list.append(citem)
             max_mem = max(count_list)
             csv_l.append(max_mem)
+        csv_l.append(sum(mem)*0.1)
         alldata.append(csv_l)
     f = open(csv_path, 'w')
     writer = csv.writer(f)
     writer.writerow(['name',
-                     'all_flod_time', 'all_flod_gpumemory',
+                     'time', 'gpu_memory','time_multiply_memory'
                      ])
     for i in alldata:
         writer.writerow(i)
