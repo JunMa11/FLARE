@@ -2,7 +2,10 @@ import json
 import csv
 import argparse
 import glob
+import matplotlib
+matplotlib.use("Agg")
 import matplotlib.pyplot as plt
+
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
     parser.add_argument("-docker_name", default='nnunet', help="docker名称")
