@@ -6,12 +6,15 @@ from multiprocessing import Process
 
 
 def daemon_process(time_interval, json_path, gpu_index=0):
-    gpu_memory_max = 0
+    count = 0
+    gpu_list = []
     while True:
+        count +=1
         nvsmi = nvidia_smi.getInstance()
         dictm = nvsmi.DeviceQuery('memory.free, memory.total')
         gpu_memory = dictm['gpu'][gpu_index]['fb_memory_usage']['total'] - dictm['gpu'][gpu_index]['fb_memory_usage'][
             'free']
+        gpu_list.append(gpu_memory)
         if os.path.exists(json_path):
             with open(json_path)as f:
                 js = json.load(f)
@@ -19,12 +22,17 @@ def daemon_process(time_interval, json_path, gpu_index=0):
             js = {
             'gpu_memory':[]
             }
-        with open(json_path, 'w')as f:
-            #js['gpu_memory'] = gpu_memory_max
-            js['gpu_memory'].append(gpu_memory)
-            json.dump(js, f, indent=4)
-        time.sleep(time_interval)
+        if count <600:
+           with open(json_path, 'w')as f:
+               js['gpu_memory'] = gpu_list
+               json.dump(js, f, indent=4)
+        else:
+           if count%10 == 0:
+             with open(json_path, 'w')as f:
+                js['gpu_memory'] = gpu_list
+                json.dump(js, f, indent=4)
 
+        time.sleep(time_interval)
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
