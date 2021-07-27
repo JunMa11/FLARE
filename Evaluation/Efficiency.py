@@ -49,7 +49,7 @@ if __name__ == '__main__':
     p1.daemon = True
     p1.start()
     t0 = time.time()
-    cmd = 'nvidia-docker run --name {} --rm -v $PWD/inputs/:/workspace/inputs/ -v $PWD/outputs/:/workspace/outputs/ {}:latest /bin/bash -c "sh {}"'.format(
+    cmd = 'nvidia-docker run --gpus="device=0" --name {} --rm -v $PWD/inputs/:/workspace/inputs/ -v $PWD/outputs/:/workspace/outputs/ {}:latest /bin/bash -c "sh {}"'.format(
     args.docker_name, args.docker_name, args.shell_path)
     #cmd = 'docker container run  --gpus="device=1"  --name {} --rm -v $PWD/inputs/:/workspace/inputs/ -v $PWD/outputs/:/workspace/outputs/ {}:latest /bin/bash -c "sh {}"'.format(
     #args.docker_name, args.docker_name, args.shell_path)
