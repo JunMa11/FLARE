@@ -38,7 +38,7 @@ if __name__ == '__main__':
     parser = argparse.ArgumentParser()
     parser.add_argument("-time_interval", default=0.1, help="time_interval")
     parser.add_argument("-shell_path", default='predict.sh', help="time_interval")
-    parser.add_argument("-gpus", default=0, help="CUDA_VISIBLE_DEVICES")
+    parser.add_argument("-gpus", default=1, help="CUDA_VISIBLE_DEVICES")
     parser.add_argument("-docker_input_file", default='./inputs/', help="docker input folder") 
     parser.add_argument("-docker_name", default='nnunet', help="docker output folder") 
     args = parser.parse_args()
@@ -49,7 +49,7 @@ if __name__ == '__main__':
     p1.daemon = True
     p1.start()
     t0 = time.time()
-    cmd = 'nvidia-docker run --gpus="device=0" --name {} --rm -v $PWD/inputs/:/workspace/inputs/ -v $PWD/outputs/:/workspace/outputs/ {}:latest /bin/bash -c "sh {}"'.format(
+    cmd = 'nvidia-docker run --gpus="device=1" --name {} --rm -v $PWD/inputs/:/workspace/inputs/ -v $PWD/outputs/:/workspace/outputs/ {}:latest /bin/bash -c "sh {}"'.format(
     args.docker_name, args.docker_name, args.shell_path)
     #cmd = 'docker container run  --gpus="device=1"  --name {} --rm -v $PWD/inputs/:/workspace/inputs/ -v $PWD/outputs/:/workspace/outputs/ {}:latest /bin/bash -c "sh {}"'.format(
     #args.docker_name, args.docker_name, args.shell_path)
