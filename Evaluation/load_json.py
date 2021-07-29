@@ -22,7 +22,11 @@ if __name__ == '__main__':
         zitem = item
         with open(zitem)as f:
             js = json.load(f)
-            csv_l.append(js['time'])
+            if 'time' not in js:
+                time = 0.1*len(js['gpu_memory'])
+            else:
+                time = js['time']
+            csv_l.append(time)
             mem = js['gpu_memory']
             x = [item * 0.1 for item in range(len(mem))]
             plt.cla()
