@@ -1,0 +1,14 @@
+Evaluation/data_all/*
+*/.vscode/settings.json
+*.tar.gz
+*.nii.gz
+*.log
+*.zip
+*.pyc
+Evaluation/imagesTs/*
+Evaluation/inputs/*
+Evaluation/outputs/*
+Evaluation/team_docker/*
+Evaluation/.vscode/*
+Evaluation/team_docker_bk/*
+*.log

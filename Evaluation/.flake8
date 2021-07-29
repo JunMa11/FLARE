@@ -1,0 +1,4 @@
+[flake8]
+ignore = E203,E501,W503,W504,E402
+max-line-length = 119
+exclude = lungsegitk,objmatch

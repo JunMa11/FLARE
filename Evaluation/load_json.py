@@ -6,11 +6,16 @@ import matplotlib
 matplotlib.use("Agg")
 import matplotlib.pyplot as plt
 
+from logger import add_file_handler_to_logger, logger
+
+add_file_handler_to_logger(name="main", dir_path=f"logs/", level="DEBUG")
+
+
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
-    parser.add_argument("-docker_name", default='nnunet', help="docker名称")
+    parser.add_argument("-docker_name", default='fully_suplearn_subtask1', help="docker名称")
     args = parser.parse_args()
-    print('we are counting', args.docker_name)
+    logger.info('we are counting: {args.docker_name}')
     json_dir = './data_all/{}'.format(args.docker_name)
     csv_path = './data_all/{}/infer_Efficiency.csv'.format(args.docker_name)
     jsonl = sorted(glob.glob(json_dir + '/*.json'))
@@ -21,8 +26,13 @@ if __name__ == '__main__':
         csv_l.append(name)
         zitem = item
         with open(zitem)as f:
-            js = json.load(f)
+            try:
+                js = json.load(f)
+            except Exception as error:
+                logger.error(f"{item} have error")
+                logger.exception(error)
             if 'time' not in js:
+                logger.error(f"{item} don't have time!!!!")
                 time = 0.1*len(js['gpu_memory'])
             else:
                 time = js['time']
@@ -30,8 +40,8 @@ if __name__ == '__main__':
             mem = js['gpu_memory']
             x = [item * 0.1 for item in range(len(mem))]
             plt.cla()
-            plt.xlabel("Time (s)", Fontname='Times New Roman', fontsize='large')
-            plt.ylabel("GPU Memory (MB)", Fontname='Times New Roman', fontsize='large')
+            plt.xlabel("Time (s)", fontsize='large')
+            plt.ylabel("GPU Memory (MB)", fontsize='large')
             plt.plot(x, mem, "b", ms=10, label="a")
             plt.savefig(zitem.replace('.json', '.jpg'))
             count_set = set(mem)
