@@ -33,6 +33,7 @@ if __name__ == '__main__':
                 logger.exception(error)
             if 'time' not in js:
                 logger.error(f"{item} don't have time!!!!")
+                logger.info(f"请手动计算 {item}")
                 time = 0.1*len(js['gpu_memory'])
             else:
                 time = js['time']
