@@ -4,13 +4,7 @@ import sys
 from loguru import logger as loguru_logger
 
 loguru_logger.configure(
-    handlers=[
-        dict(
-            sink=sys.stderr,
-            filter=lambda record: record["extra"]["console"],
-            level="DEBUG",
-        ),
-    ],
+    handlers=[dict(sink=sys.stderr, filter=lambda record: record["extra"]["console"], level="DEBUG",),],
 )
 
 

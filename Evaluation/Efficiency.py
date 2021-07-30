@@ -9,7 +9,7 @@ from pynvml.smi import nvidia_smi
 
 from logger import add_file_handler_to_logger, logger
 
-add_file_handler_to_logger(name="main", dir_path=f"logs/", level="DEBUG")
+add_file_handler_to_logger(name="main", dir_path="logs/", level="DEBUG")
 
 manager = Manager()
 gpu_list = manager.list()
@@ -20,8 +20,7 @@ def daemon_process(time_interval, json_path, gpu_index=1):
         nvsmi = nvidia_smi.getInstance()
         dictm = nvsmi.DeviceQuery("memory.free, memory.total")
         gpu_memory = (
-            dictm["gpu"][gpu_index]["fb_memory_usage"]["total"]
-            - dictm["gpu"][gpu_index]["fb_memory_usage"]["free"]
+            dictm["gpu"][gpu_index]["fb_memory_usage"]["total"] - dictm["gpu"][gpu_index]["fb_memory_usage"]["free"]
         )
         gpu_list.append(gpu_memory)
         # with open(json_path, 'w')as f:
@@ -60,23 +59,17 @@ if __name__ == "__main__":
     parser.add_argument("-sleep_time", default=3, help="sleep time")
     parser.add_argument("-shell_path", default="predict.sh", help="time_interval")
     parser.add_argument("-gpus", default=1, help="CUDA_VISIBLE_DEVICES")
-    parser.add_argument(
-        "-docker_input_file", default="./inputs/", help="docker input folder"
-    )
+    parser.add_argument("-docker_input_file", default="./inputs/", help="docker input folder")
     parser.add_argument("-docker_name", default="nnunet", help="docker output folder")
     args = parser.parse_args()
     logger.info(f"We are evaluating {args.docker_name}")
     json_dir = "./data_all/{}".format(args.docker_name)
     json_path = os.path.join(
-        json_dir,
-        glob.glob(args.docker_input_file + "/*")[0].split("/")[-1].split(".")[0]
-        + ".json",
+        json_dir, glob.glob(args.docker_input_file + "/*")[0].split("/")[-1].split(".")[0] + ".json",
     )
 
     try:
-        p1 = Process(
-            target=daemon_process, args=(args.time_interval, json_path, args.gpus,)
-        )
+        p1 = Process(target=daemon_process, args=(args.time_interval, json_path, args.gpus,))
         p1.daemon = True
         p1.start()
         t0 = time.time()
@@ -84,7 +77,8 @@ if __name__ == "__main__":
         #     args.docker_name, args.docker_name, args.shell_path
         # )
         cmd = 'docker container run --gpus="device=1" --name {} --rm -v $PWD/inputs/:/workspace/inputs/ -v $PWD/outputs/:/workspace/outputs/ {}:latest /bin/bash -c "sh predict.sh" '.format(
-            args.docker_name, args.docker_name)
+            args.docker_name, args.docker_name
+        )
         logger.info(f"cmd is : {cmd}")
         logger.info("start predict...")
         os.system(cmd)
