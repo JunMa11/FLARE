@@ -58,6 +58,7 @@ if __name__ == "__main__":
     parser.add_argument("-time_interval", default=0.1, help="time_interval")
     parser.add_argument("-sleep_time", default=3, help="sleep time")
     parser.add_argument("-shell_path", default="predict.sh", help="time_interval")
+    # XXX: in case of someone use lower docker, please use specified GPU !!!
     parser.add_argument("-gpus", default=1, help="CUDA_VISIBLE_DEVICES")
     parser.add_argument("-docker_input_file", default="./inputs/", help="docker input folder")
     parser.add_argument("-docker_name", default="nnunet", help="docker output folder")
@@ -73,6 +74,7 @@ if __name__ == "__main__":
         p1.daemon = True
         p1.start()
         t0 = time.time()
+        # XXX: in case of someone use lower docker, please use specified GPU !!!
         # cmd = 'nvidia docker run --runtime="nvidia" --name {} --rm -v $PWD/inputs/:/workspace/input/ -v $PWD/inputs/:/workspace/inputs/ -v $PWD/outputs/:/workspace/outputs/ {}:latest /bin/sh -c "sh {}"'.format(
         #     args.docker_name, args.docker_name, args.shell_path
         # )
