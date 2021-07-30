@@ -56,7 +56,7 @@ def save_result(start_time, sleep_time, json_path, gpu_list):
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
     parser.add_argument("-time_interval", default=0.1, help="time_interval")
-    parser.add_argument("-sleep_time", default=3, help="sleep time")
+    parser.add_argument("-sleep_time", default=5, help="sleep time")
     parser.add_argument("-shell_path", default="predict.sh", help="time_interval")
     # XXX: in case of someone use lower docker, please use specified GPU !!!
     parser.add_argument("-gpus", default=1, help="CUDA_VISIBLE_DEVICES")
