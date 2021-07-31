@@ -43,7 +43,7 @@ def save_result(start_time, sleep_time, json_path, gpu_list_):
         js["gpu_memory"] = gpu_list_
         json.dump(js, f, indent=4)
 
-    infer_time = time.time() - start_time - sleep_time
+    infer_time = time.time() - start_time
     with open(json_path, "r") as f:
         js = json.load(f)
     with open(json_path, "w") as f:
@@ -84,9 +84,9 @@ if __name__ == "__main__":
         logger.info(f"cmd is : {cmd}")
         logger.info("start predict...")
         os.system(cmd)
-        time.sleep(args.sleep_time)
         gpu_list = list(gpu_list)
         gpu_list_copy = gpu_list.copy()
         save_result(t0, args.sleep_time, json_path, gpu_list_copy)
+        time.sleep(args.sleep_time)
     except Exception as error:
         logger.exception(error)
