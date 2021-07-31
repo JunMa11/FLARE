@@ -30,7 +30,7 @@ def daemon_process(time_interval, json_path, gpu_index=1):
         time.sleep(time_interval)
 
 
-def save_result(start_time, sleep_time, json_path, gpu_list):
+def save_result(start_time, sleep_time, json_path, gpu_list_):
     if os.path.exists(json_path):
         with open(json_path) as f:
             js = json.load(f)
@@ -40,7 +40,7 @@ def save_result(start_time, sleep_time, json_path, gpu_list):
 
     with open(json_path, "w") as f:
         # js['gpu_memory'] = gpu_memory_max
-        js["gpu_memory"] = gpu_list
+        js["gpu_memory"] = gpu_list_
         json.dump(js, f, indent=4)
 
     infer_time = time.time() - start_time - sleep_time
@@ -86,6 +86,7 @@ if __name__ == "__main__":
         os.system(cmd)
         time.sleep(args.sleep_time)
         gpu_list = list(gpu_list)
-        save_result(t0, args.sleep_time, json_path, gpu_list)
+        gpu_list_copy = gpu_list.copy()
+        save_result(t0, args.sleep_time, json_path, gpu_list_copy)
     except Exception as error:
         logger.exception(error)
