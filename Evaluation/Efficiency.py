@@ -75,11 +75,11 @@ if __name__ == "__main__":
         p1.start()
         t0 = time.time()
         # XXX: in case of someone use lower docker, please use specified GPU !!!
-        # cmd = 'docker container run --runtime="nvidia"  -e NVIDIA_VISIBLE_DEVICES=1 --name {} --rm -v $PWD/inputs/:/workspace/input/ -v $PWD/inputs/:/workspace/inputs/ -v $PWD/outputs/:/workspace/outputs/ {}:latest /bin/sh -c "sh {}"'.format(
-        #     args.docker_name, args.docker_name, args.shell_path
+        # cmd = 'docker container run --runtime="nvidia"  -e NVIDIA_VISIBLE_DEVICES={} --name {} --rm -v $PWD/inputs/:/workspace/input/ -v $PWD/inputs/:/workspace/inputs/ -v $PWD/outputs/:/workspace/outputs/ {}:latest /bin/sh -c "sh {}"'.format(
+        #     args.gpus, args.docker_name, args.docker_name, args.shell_path
         # )
-        cmd = 'docker container run --gpus="device=1" --name {} --rm -v $PWD/inputs/:/workspace/inputs/ -v $PWD/outputs/:/workspace/outputs/ {}:latest /bin/bash -c "sh predict.sh" '.format(
-            args.docker_name, args.docker_name
+        cmd = 'docker container run --gpus="device={}" --name {} --rm -v $PWD/inputs/:/workspace/inputs/ -v $PWD/outputs/:/workspace/outputs/ {}:latest /bin/bash -c "sh predict.sh" '.format(
+            args.gpus, args.docker_name, args.docker_name
         )
         logger.info(f"cmd is : {cmd}")
         logger.info("start predict...")
