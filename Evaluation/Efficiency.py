@@ -64,7 +64,7 @@ if __name__ == "__main__":
     parser.add_argument("-docker_name", default="nnunet", help="docker output folder")
     args = parser.parse_args()
     logger.info(f"We are evaluating {args.docker_name}")
-    json_dir = "./data_all/{}".format(args.docker_name)
+    json_dir = "./results/{}".format(args.docker_name)
     json_path = os.path.join(
         json_dir, glob.glob(args.docker_input_file + "/*")[0].split("/")[-1].split(".")[0] + ".json",
     )
