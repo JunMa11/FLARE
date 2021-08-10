@@ -3,6 +3,8 @@ import csv
 import argparse
 import glob
 import matplotlib
+import os
+join = os.path.join
 
 matplotlib.use("Agg")
 import matplotlib.pyplot as plt
@@ -14,11 +16,12 @@ add_file_handler_to_logger(name="main", dir_path=f"logs/", level="DEBUG")
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
-    parser.add_argument("-docker_name", default="fully_suplearn_subtask1", help="docker名称")
+    parser.add_argument("-docker_name", default="fully_suplearn_subtask1", help="team docker name")
+    parser.add_argument("-save_path", default="./results", help="save_path")
     args = parser.parse_args()
     logger.info("we are counting: {args.docker_name}")
-    json_dir = "./data_all/{}".format(args.docker_name)
-    csv_path = "./data_all/{}/infer_Efficiency.csv".format(args.docker_name)
+    json_dir = join(args.save_path, args.docker_name)
+    csv_path = join(json_dir, args.docker_name + '_Efficiency.csv')
     jsonl = sorted(glob.glob(json_dir + "/*.json"))
     alldata = []
     for item in jsonl:
@@ -34,7 +37,7 @@ if __name__ == "__main__":
                 logger.exception(error)
             if "time" not in js:
                 logger.error(f"{item} don't have time!!!!")
-                logger.info(f"请手动计算 {item}")
+                logger.info(f"Manually compute {item}")
                 time = 0.1 * len(js["gpu_memory"])
             else:
                 time = js["time"]
