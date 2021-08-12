@@ -29,13 +29,6 @@ for name in filenames:
     case_spacing = gt_nii.header.get_zooms()
     gt_data = np.uint8(gt_nii.get_fdata())
     seg_data = nb.load(join(seg_path, name)).get_fdata()
-    
-    if name.startswith("btca"):
-        gt_data[gt_data==4] = 0
-        gt_data[gt_data==11] = 4
-        gt_data[gt_data==3] = 2
-        gt_data[gt_data==1] = 3
-        gt_data[gt_data==6] = 1
 
     for i in range(1, 5):
         if np.sum(gt_data==i)==0 and np.sum(seg_data==i)==0:
