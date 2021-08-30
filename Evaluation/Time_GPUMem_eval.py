@@ -3,8 +3,18 @@ import os
 import shutil
 import time
 import torch
+from pathlib import Path
 join = os.path.join
 from logger import add_file_handler_to_logger, logger
+
+
+def check_dir(file_path):
+    file_path = Path(file_path)
+    files = [f for f in file_path.iterdir() if ".nii.gz" in str(f)]
+    if len(files) != 0:
+        return False
+    return True
+
 
 add_file_handler_to_logger(name="main", dir_path="logs/", level="DEBUG")
 
@@ -28,6 +38,9 @@ for docker in dockers:
             shutil.rmtree(team_outpath)
         os.mkdir(team_outpath)
         for case in test_cases:
+            if not check_dir('./inputs'):
+                logger.error("please check inputs folder")
+                raise
             shutil.copy(join(test_img_path, case), './inputs')
             start_time = time.time()
             os.system('python Efficiency.py -docker_name {}'.format(name))
