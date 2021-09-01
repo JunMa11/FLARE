@@ -24,6 +24,7 @@ save_path = './results/'
 
 os.makedirs(save_path, exist_ok=True)
 os.makedirs('./inputs/', exist_ok=True)
+os.makedirs('./outputs/', exist_ok=True)
 
 dockers = sorted(os.listdir(docker_path))
 test_cases = sorted(os.listdir(test_img_path))
