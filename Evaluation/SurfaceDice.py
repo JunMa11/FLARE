@@ -10,7 +10,7 @@ import scipy.ndimage
 #
 # created by compute_surface_area_lookup_table.ipynb using the 
 # marching_cube algorithm, see e.g. https://en.wikipedia.org/wiki/Marching_cubes
-#
+# credit to: http://medicaldecathlon.com/files/Surface_distance_based_measures.ipynb
 neighbour_code_to_normals = [
   [[0,0,0]],
   [[0.125,0.125,0.125]],
