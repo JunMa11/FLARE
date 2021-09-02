@@ -8,7 +8,7 @@ Please feel free to raise any issues if you have questions about the challenge, 
 
 - python 3.8+
 - torch
-- logger
+- loguru
 - pynvml
 
 
