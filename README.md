@@ -1,26 +1,19 @@
-# Official repository of MICCAI 2021 Challenge: [FLARE21](https://flare.grand-challenge.org/FLARE21/).
+# Official Repository of FLARE Challenge
 
-We provide the evaluation code and a [video demo](https://www.bilibili.com/video/BV1mU4y1n7V6) of the evaluation process. You can use the code to evaluate the `Running time` and `Maximum used GPU memory` of your Docker.
+This repository provides the evaluation code of the FLARE Challenges. More details of the challenge are available on the corresponding websites.
 
-Please feel free to raise any issues if you have questions about the challenge, e.g., dataset, evaluation measures, ranking scheme and so on.
+## [MICCAI FLARE 2021](https://flare.grand-challenge.org/FLARE21/): Fast and Low GPU memory Abdominal oRgan sEgmentation in CT Scans
 
-### Enviroment and requirement
-
-- python 3.8+
-- torch
-- loguru
-- pynvml
+- 511 cases from 11 medical centers
+- Fully supervised setting
+- Four segmentation targets: liver, kidney, spleen, and pancreas
+- Evaluation metrics: DSC, NSD, Running time, Maximum GPU memory consumption
 
 
-### Compute running time and GPU memory
 
-Set `docker_path`, `test_img_path`, and `save_path` in `Time_GPUMem_eval.py` and run
+## [MICCAI FLARE 2022](https://flare22.grand-challenge.org/): Fast and Low-resource semi-supervised Abdominal oRgan sEgmentation in CT Scans
 
-`nohup python Time_GPUMem_eval.py >> infos.log &`
-
-### Compute DSC and NSD
-
-Set `seg_path`, `gt_path`, `save_path`, `save_name` in `DSC_NSD_eval.py` and run
-
-`python DSC_NSD_eval.py`
-
+- 2300 CT scans from 20+ medical centers
+- Semi-supervised setting
+- 13 segmentation targets:  liver, spleen, pancreas, right kidney, left kidney, stomach, gallbladder, esophagus, aorta, inferior vena cava, right adrenal gland, left adrenal gland, and duodenum
+- Evaluation metrics: DSC, NSD, Running time, Area under GPU memory-time curve and Area under CPU utilization-time curve
