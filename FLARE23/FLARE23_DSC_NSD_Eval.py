@@ -57,7 +57,7 @@ seg_metrics = OrderedDict()
 seg_metrics['Name'] = list()
 label_tolerance = OrderedDict({'Liver': 5, 'RK':3, 'Spleen':3, 'Pancreas':5, 
                    'Aorta': 2, 'IVC':2, 'RAG':2, 'LAG':2, 'Gallbladder': 2,
-                   'Esophagus':3, 'Stomach': 5, 'Duodenum': 7, 'LK':3, 'Tumor':2})
+                   'Esophagus':3, 'Stomach': 5, 'Duodenum': 7, 'LK':3, 'Lesion':2})
 for organ in label_tolerance.keys():
     seg_metrics['{}_DSC'.format(organ)] = list()
 for organ in label_tolerance.keys():
@@ -137,7 +137,7 @@ for key, value in seg_metrics.items():
 organ_dsc = []
 organ_nsd = []
 for key, value in overall_metrics.items():
-    if 'Tumor' not in key:
+    if 'Lesion' not in key:
         if 'DSC' in key:
             organ_dsc.append(value)
         if 'NSD' in key:
