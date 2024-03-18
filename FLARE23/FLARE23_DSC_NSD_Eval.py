@@ -114,7 +114,7 @@ for reference_volume_fn in reference_volume_list:
             else:
                 organ_i_gt, organ_i_seg = reference_volume==i, submission_volume==i
             DSC_i = compute_dice_coefficient(organ_i_gt, organ_i_seg)
-            if DSC_i < 0.1:
+            if DSC_i < 0.2:
                 NSD_i = 0
             else:
                 surface_distances = compute_surface_distances(organ_i_gt, organ_i_seg, voxel_spacing)
