@@ -1,8 +1,9 @@
+#!/usr/bin/env python
 # -*- coding: utf-8 -*-
 """
-Created on Fri Apr 15 12:59:48 2022
+Created on March 2024
 
-@author: 12593
+@author: junma
 """
 
 import numpy as np
@@ -27,6 +28,7 @@ seg_metrics['Name'] = list()
 label_tolerance = OrderedDict({'Liver': 5, 'RK':3, 'Spleen':3, 'Pancreas':5, 
                    'Aorta': 2, 'IVC':2, 'RAG':2, 'LAG':2, 'Gallbladder': 2,
                    'Esophagus':3, 'Stomach': 5, 'Duodenum': 7, 'LK':3})
+
 for organ in label_tolerance.keys():
     seg_metrics['{}_DSC'.format(organ)] = list()
 for organ in label_tolerance.keys():
@@ -80,7 +82,7 @@ for name in filenames:
             else:
                 organ_i_gt, organ_i_seg = gt_data==i, seg_data==i
             DSC_i = compute_dice_coefficient(organ_i_gt, organ_i_seg)
-            if DSC_i < 0.2:
+            if DSC_i < 0.2:  # don't compute NSD if DSC is too low
                 NSD_i = 0
             else:
                 surface_distances = compute_surface_distances(organ_i_gt, organ_i_seg, case_spacing)

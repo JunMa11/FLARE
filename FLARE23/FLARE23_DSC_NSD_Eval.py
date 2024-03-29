@@ -6,15 +6,7 @@ import numpy as np
 import glob
 import gc
 from collections import OrderedDict
-from helpers.SurfaceDice import compute_surface_distances, compute_surface_dice_at_tolerance, compute_dice_coefficient
-from helpers.utils import time_elapsed
-
-# from scipy.ndimage.measurements import label as label_connected_components
-# from helpers.calc_metric import (dice,
-#                                  detect_lesions,
-#                                  compute_segmentation_scores,
-#                                  compute_tumor_burden,
-#                                  LARGE)
+from SurfaceDice import compute_surface_distances, compute_surface_dice_at_tolerance, compute_dice_coefficient
 
 
 def find_lower_upper_zbound(organ_mask):
@@ -74,7 +66,6 @@ for reference_volume_fn in reference_volume_list:
                          "Missing volume: {}".format(submission_volume_path))
     print("Found corresponding submission file {} for reference file {}"
           "".format(reference_volume_fn, submission_volume_path))
-    t = time_elapsed()
 
     # Load reference and submission volumes with Nibabel.
     reference_volume = nb.load(reference_volume_fn)
